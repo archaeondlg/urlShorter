@@ -90,3 +90,11 @@ func RefreshToken(baseClaims BaseClaims) (string, error) {
 func AutoRefreshToken(claims *CustomClaims, c *gin.Context) {
 
 }
+
+func Auth(ctx *gin.Context) BaseClaims {
+	auth, ok := ctx.Get("auth")
+	if !ok {
+		return BaseClaims{}
+	}
+	return auth.(BaseClaims)
+}

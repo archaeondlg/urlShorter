@@ -1,9 +1,12 @@
 package service
 
-import "project/model/common"
+import (
+	"project/global"
+	"project/model/common"
+)
 
 type RedirectRecordService struct{}
 
-func (s *RedirectRecordService) Save(record *common.RedirectRecord) {
-
+func (s *RedirectRecordService) Create(record *common.RedirectRecord) error {
+	return global.DB.Create(record).Error
 }

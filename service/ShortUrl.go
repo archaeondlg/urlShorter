@@ -3,48 +3,23 @@ package service
 import (
 	"project/global"
 	"project/model/common"
-	"strings"
+	"project/utils"
 	"time"
 )
 
 const (
-	size = 6
+	size                   = 6         // 短链长度
+	expired_duration int64 = 604800000 // 7天 热点数据
 )
-
-var base62List = []string{
-	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-	"l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
-	"v", "w", "x", "y", "z", "A",
-	"B", "C", "E", "F", "D", "G", "H", "I", "J", "K", "L", "M",
-	"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-}
-
-const bas62Len int64 = 62
 
 type ShortUrlService struct {
 	Service
 }
 
-// id := global.Snowflake.Generate().Int64()
+// 自定义编码
 func (s *ShortUrlService) Encode(id int64) string {
-	sb := strings.Builder{}
-	for id > 0 {
-		index := id % bas62Len
-		sb.WriteString(base62List[index])
-		id /= bas62Len
-	}
-
-	return sb.String()[:size] // 截断字符串
+	return utils.Int2Base62(id)[:size] // 截断字符串
 }
-
-var (
-	retry = 3
-)
-
-const (
-	expired_duration int64 = 604800000 // 7天
-)
 
 func (s *ShortUrlService) Create(url string, userId int64) error {
 	var code string
@@ -53,6 +28,7 @@ func (s *ShortUrlService) Create(url string, userId int64) error {
 	shortUrl := common.ShortUrl{
 		UrlId:     id,
 		UserId:    userId,
+		Url:       url,
 		Code:      code,
 		ExpiredAt: time.Now().Unix() + expired_duration,
 	}

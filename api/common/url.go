@@ -1,7 +1,6 @@
 package common
 
 import (
-	"net/http"
 	"project/model/common"
 	"project/model/errorCode"
 	"project/model/response"
@@ -16,12 +15,12 @@ type UrlApi struct{}
 
 func (s *UrlApi) Access(c *gin.Context) {
 	code := c.Param("code")
-	c.String(http.StatusOK, "Hello %s", code)
 	ip := c.ClientIP()
 	ua := c.Request.UserAgent()
 	shortUrl, err := service.ServiceGroup.ShortUrlService.GetOne(code)
 	if err != nil {
 		response.ErrorWithMsg("链接不存在", errorCode.OTHER, c)
+		return
 	}
 
 	now := time.Now().Unix()
@@ -35,15 +34,19 @@ func (s *UrlApi) Access(c *gin.Context) {
 		IP:     ip,
 		UA:     ua,
 	}
-	service.ServiceGroup.RedirectRecordService.Save(&record)
+	err = service.ServiceGroup.RedirectRecordService.Create(&record)
+	if err != nil {
+		response.ErrorWithMsg(err.Error(), errorCode.OTHER, c)
+		return
+	}
+
 	c.Redirect(errorCode.RedirectTemp, shortUrl.Url)
 }
 
 func (s *UrlApi) Create(c *gin.Context) {
 	var shortUrl common.ShortUrl
 	c.ShouldBindJSON(&shortUrl)
-	auth, _ := c.Get("auth")
-	authModel := auth.(utils.BaseClaims)
+	authModel := utils.Auth(c)
 	err := service.ServiceGroup.ShortUrlService.Create(shortUrl.Url, int64(authModel.ID))
 	if err != nil {
 		response.ErrorWithMsg(err.Error(), errorCode.OTHER, c)

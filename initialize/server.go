@@ -14,7 +14,7 @@ type server interface {
 func Run() {
 	Router := Routers()
 
-	address := fmt.Sprintf(":%d", global.Config.System.Addr)
+	address := global.Config.System.Addr
 	s := initServer(address, Router)
 
 	global.Log.Info("server run success on ", zap.String("address", address))
