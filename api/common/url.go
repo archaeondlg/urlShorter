@@ -47,10 +47,10 @@ func (s *UrlApi) Create(c *gin.Context) {
 	var shortUrl common.ShortUrl
 	c.ShouldBindJSON(&shortUrl)
 	authModel := utils.Auth(c)
-	err := service.ServiceGroup.ShortUrlService.Create(shortUrl.Url, int64(authModel.ID))
+	shortUrl, err := service.ServiceGroup.ShortUrlService.Create(shortUrl.Url, int64(authModel.ID))
 	if err != nil {
 		response.ErrorWithMsg(err.Error(), errorCode.OTHER, c)
 		return
 	}
-	response.Ok(c)
+	response.OkWithData(shortUrl, c)
 }

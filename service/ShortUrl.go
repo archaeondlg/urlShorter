@@ -21,7 +21,7 @@ func (s *ShortUrlService) Encode(id int64) string {
 	return utils.Int2Base62(id)[:size] // 截断字符串
 }
 
-func (s *ShortUrlService) Create(url string, userId int64) error {
+func (s *ShortUrlService) Create(url string, userId int64) (common.ShortUrl, error) {
 	var code string
 	id := global.Snowflake.Generate().Int64()
 	code = s.Encode(id)
@@ -33,7 +33,7 @@ func (s *ShortUrlService) Create(url string, userId int64) error {
 		ExpiredAt: time.Now().Unix() + expired_duration,
 	}
 	tx := global.DB.Create(&shortUrl)
-	return tx.Error
+	return shortUrl, tx.Error
 }
 func (s *ShortUrlService) GetOne(code string) (*common.ShortUrl, error) {
 	// 过滤器
