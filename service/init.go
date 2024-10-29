@@ -11,6 +11,7 @@ func (s *Service) Delete()  {}
 type Group struct {
 	ShortUrlService
 	RedirectRecordService
+	AdminService
 }
 
 var ServiceGroup = new(Group)

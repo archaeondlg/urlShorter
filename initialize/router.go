@@ -19,7 +19,8 @@ func Routers() *gin.Engine {
 	// Router.Use(middleware.Cors()) // 按照配置的规则放行跨域请求
 
 	{
-		router.RouterGroup.Register(Router)
+		router.RouterGroup.PublicRouter.Register(Router)
+		router.RouterGroup.AdminRouter.Register(Router)
 	}
 	global.Log.Info("router register success")
 	return Router

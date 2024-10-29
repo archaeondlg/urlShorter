@@ -22,8 +22,8 @@ type CustomClaims struct {
 }
 
 type BaseClaims struct {
-	ID          uint
-	AuthorityId uint
+	ID     uint
+	RoleId uint
 }
 
 func GetToken(c *gin.Context) string {
@@ -58,13 +58,13 @@ func NewToken(baseClaims BaseClaims) (string, error) {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(global.Config.JWT.SigningKey)
+	return token.SignedString([]byte(global.Config.JWT.SigningKey))
 }
 
 // 解析 token
 func ParseToken(tokenString string) (*CustomClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (i interface{}, e error) {
-		return global.Config.JWT.SigningKey, nil
+		return []byte(global.Config.JWT.SigningKey), nil
 	})
 
 	if err != nil {
@@ -74,9 +74,9 @@ func ParseToken(tokenString string) (*CustomClaims, error) {
 		return nil, ErrInvalidToken
 	}
 	if token.Valid {
-		claims, ok := token.Claims.(CustomClaims)
+		claims, ok := token.Claims.(*CustomClaims)
 		if ok {
-			return &claims, nil
+			return claims, nil
 		}
 	}
 

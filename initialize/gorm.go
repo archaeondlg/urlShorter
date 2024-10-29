@@ -4,6 +4,7 @@ import (
 	"os"
 	"project/global"
 	"project/model/common"
+	"project/model/system"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -47,6 +48,7 @@ func ConnectMysql() *gorm.DB {
 
 func Migrate() {
 	err := global.DB.AutoMigrate(
+		system.Admin{},
 		common.User{},
 		common.ShortUrl{},
 		common.RedirectRecord{},
