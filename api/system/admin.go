@@ -1,6 +1,7 @@
 package system
 
 import (
+	"project/api"
 	"project/model/errorCode"
 	"project/model/response"
 	"project/model/system"
@@ -10,7 +11,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AdminApi struct{}
+type AdminApi struct {
+	api.Api
+}
 
 func (s *AdminApi) Login(c *gin.Context) {
 	var adminLogin system.AdminLogin
@@ -46,4 +49,16 @@ func (s *AdminApi) ChangePasswd(c *gin.Context) {
 	response.Ok(c)
 }
 
+func (s *AdminApi) Create(c *gin.Context) {
+	var admin system.Admin
+	c.ShouldBindJSON(&admin)
+	tx := service.ServiceGroup.AdminService.Create(admin)
+	s.Tx(c, tx)
+}
+
+func (s *AdminApi) Update(c *gin.Context) {
+	var admin system.Admin
+	c.ShouldBindJSON(&admin)
+	tx := service.ServiceGroup.AdminService.Update(&admin)
+	s.Tx(c, tx)
 }
