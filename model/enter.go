@@ -18,3 +18,8 @@ type Model struct {
 	ID        uint      `gorm:"primarykey" json:"Id"` // 主键ID
 	CreatedAt time.Time // 创建时间
 }
+
+type PageQuery struct {
+	PageNum  int `json:"pageNum"`
+	PageSize int `json:"pageSize"`
+}

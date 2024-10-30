@@ -8,11 +8,11 @@ type Admin struct {
 	Username string `json:"username" gorm:"column:username;"`
 	Password string `json:"passwod" gorm:"column:password;"`
 	Avatar   string `json:"avatar" gorm:"column:avatar;"`
-	// RoleId   int    `json:"roleId" gorm:"column:role_id"`
-	Phone string `json:"phone" gorm:"column:phone;"`
-	Email string `json:"email" gorm:"column:email;"`
+	Phone    string `json:"phone" gorm:"column:phone;"`
+	Email    string `json:"email" gorm:"column:email;"`
 	// Enable        int64
 	// OriginSetting
+	// RoleId   int    `json:"roleId" gorm:"column:role_id"`
 }
 
 type AdminLogin struct {
