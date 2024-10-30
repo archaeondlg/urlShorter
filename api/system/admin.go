@@ -12,7 +12,7 @@ import (
 
 type AdminApi struct{}
 
-func (s AdminApi) Login(c *gin.Context) {
+func (s *AdminApi) Login(c *gin.Context) {
 	var adminLogin system.AdminLogin
 	c.ShouldBindJSON(&adminLogin)
 	admin, err := service.ServiceGroup.AdminService.Login(adminLogin)
@@ -32,10 +32,9 @@ func (s AdminApi) Login(c *gin.Context) {
 	response.OkWithData(system.LoginResponse{
 		Token: token,
 	}, c)
-	return
 }
 
-func (s AdminApi) ChangePasswd(c *gin.Context) {
+func (s *AdminApi) ChangePasswd(c *gin.Context) {
 	var change system.AdminPassword
 	c.ShouldBindJSON(&change)
 	admin := utils.Auth(c)
@@ -45,5 +44,6 @@ func (s AdminApi) ChangePasswd(c *gin.Context) {
 		return
 	}
 	response.Ok(c)
-	return
+}
+
 }
