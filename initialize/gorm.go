@@ -49,7 +49,7 @@ func ConnectMysql() *gorm.DB {
 func Migrate() {
 	err := global.DB.AutoMigrate(
 		system.Admin{},
-		common.User{},
+		common.Tenant{},
 		common.ShortUrl{},
 		common.RedirectRecord{},
 	)
