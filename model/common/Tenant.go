@@ -8,3 +8,13 @@ type Tenant struct {
 	Password string `json:"password" form:"password" gorm:"column:password"`
 	NickName string `json:"nickName" form:"nickName" gorm:"column:nick_name"`
 }
+
+type TenantLogin struct {
+	Username string `json:"username" gorm:"column:username;"`
+	Password string `json:"passwod" gorm:"column:password;"`
+}
+
+type TenantPassword struct {
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
+}

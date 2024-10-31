@@ -12,6 +12,7 @@ type Group struct {
 	ShortUrlService
 	RedirectRecordService
 	AdminService
+	TenantService
 }
 
 var ServiceGroup = new(Group)
