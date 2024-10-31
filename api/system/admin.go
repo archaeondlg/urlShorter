@@ -2,6 +2,7 @@ package system
 
 import (
 	"project/api"
+	"project/model"
 	"project/model/errorCode"
 	"project/model/response"
 	"project/model/system"
@@ -38,7 +39,7 @@ func (s *AdminApi) Login(c *gin.Context) {
 }
 
 func (s *AdminApi) ChangePasswd(c *gin.Context) {
-	var change system.AdminPassword
+	var change model.ChangePassword
 	c.ShouldBindJSON(&change)
 	admin := utils.Auth(c)
 	err := service.ServiceGroup.AdminService.ChangePasswd(admin.ID, change.OldPassword, change.NewPassword)

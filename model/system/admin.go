@@ -16,13 +16,8 @@ type Admin struct {
 }
 
 type AdminLogin struct {
-	Username string
-	Password string
-}
-
-type AdminPassword struct {
-	OldPassword string `json:"oldPassword"`
-	NewPassword string `json:"newPassword"`
+	Username string `json:"username" gorm:"column:username;"`
+	Password string `json:"passwod" gorm:"column:password;"`
 }
 
 type LoginResponse struct {

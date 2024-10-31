@@ -14,11 +14,12 @@ type AdminService struct {
 
 func (s *AdminService) Login(adminLogin system.AdminLogin) (admin system.Admin, err error) {
 	err = global.DB.Where("username = ?", adminLogin.Username).First(&admin).Error
-	if err == nil {
-		ok := utils.BcryptCheck(adminLogin.Password, admin.Password)
-		if !ok {
-			return admin, errors.New("账号或密码错误")
-		}
+	if err != nil {
+		return
+	}
+	ok := utils.BcryptCheck(adminLogin.Password, admin.Password)
+	if !ok {
+		return admin, errors.New("账号或密码错误")
 	}
 	return admin, err
 }

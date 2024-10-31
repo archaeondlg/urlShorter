@@ -23,3 +23,14 @@ type PageQuery struct {
 	PageNum  int `json:"pageNum"`
 	PageSize int `json:"pageSize"`
 }
+
+type ChangePassword struct {
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
+}
+
+type VerifyForm struct {
+	Type  string
+	Key   string
+	Value string
+}

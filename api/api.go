@@ -17,3 +17,10 @@ func (s *Api) Tx(ctx *gin.Context, tx *gorm.DB) {
 	}
 	response.Ok(ctx)
 }
+func (s *Api) ReturnErr(ctx *gin.Context, err error) {
+	if err != nil {
+		response.ErrorWithMsg(err.Error(), errorCode.OTHER, ctx)
+		return
+	}
+	response.Ok(ctx)
+}
