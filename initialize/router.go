@@ -1,9 +1,10 @@
 package initialize
 
 import (
-	"github.com/gin-gonic/gin"
 	"project/global"
 	"project/router"
+
+	"github.com/gin-gonic/gin"
 )
 
 // 初始化总路由
@@ -21,6 +22,7 @@ func Routers() *gin.Engine {
 	{
 		router.RouterGroup.PublicRouter.Register(Router)
 		router.RouterGroup.AdminRouter.Register(Router)
+		router.RouterGroup.TenantRouter.Register(Router)
 	}
 	global.Log.Info("router register success")
 	return Router

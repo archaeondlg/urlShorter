@@ -2,6 +2,7 @@ package tenant
 
 import (
 	"project/api"
+	"project/model"
 	"project/model/common"
 	"project/model/errorCode"
 	"project/model/response"
@@ -37,4 +38,16 @@ func (s *TenantApi) Login(c *gin.Context) {
 	response.OkWithData(system.LoginResponse{
 		Token: token,
 	}, c)
+}
+
+func (s *TenantApi) ChangePasswd(c *gin.Context) {
+	var change model.ChangePassword
+	c.ShouldBindJSON(&change)
+	admin := utils.Auth(c)
+	err := service.ServiceGroup.TenantService.ChangePasswd(admin.ID, change)
+	if err != nil {
+		response.ErrorWithMsg(err.Error(), errorCode.OTHER, c)
+		return
+	}
+	response.Ok(c)
 }

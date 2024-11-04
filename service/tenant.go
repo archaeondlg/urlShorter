@@ -14,8 +14,8 @@ type TenantService struct {
 	dao.TenantDao
 }
 
-func (s *TenantService) Register() {
-
+func (s *TenantService) Register(model *common.Tenant) *gorm.DB {
+	return s.Create(model)
 }
 
 func (s *TenantService) Login(form common.TenantLogin) (model common.Tenant, err error) {
@@ -35,7 +35,7 @@ func (s *TenantService) Create(model *common.Tenant) *gorm.DB {
 }
 
 // 修改密码
-func (s *TenantService) ChangePasswd(modelId string, change model.ChangePassword) (err error) {
+func (s *TenantService) ChangePasswd(modelId uint, change model.ChangePassword) (err error) {
 	var model common.Tenant
 	tx := s.GetOne(&model, "id = ?", modelId)
 	if tx.Error != nil {

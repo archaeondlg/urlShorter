@@ -12,13 +12,9 @@ func (s AdminRouter) Register(Router *gin.Engine) {
 	{
 		Router.POST("/auth/login", api.AdminApi.Login)
 	}
-	Router.Use(middleware.JWT())
 	authRouter := Router.Group("auth")
+	authRouter.Use(middleware.JWT())
 	{
 		authRouter.POST("changePassword", api.AdminApi.ChangePasswd)
-	}
-	urlRouter := Router.Group("url")
-	{
-		urlRouter.POST("create", api.UrlApi.Create)
 	}
 }
