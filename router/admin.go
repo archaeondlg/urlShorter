@@ -10,9 +10,9 @@ type AdminRouter struct{}
 
 func (s AdminRouter) Register(Router *gin.Engine) {
 	{
-		Router.POST("/auth/login", api.AdminApi.Login)
+		Router.POST("/admin/login", api.AdminApi.Login)
 	}
-	authRouter := Router.Group("auth")
+	authRouter := Router.Group("admin")
 	authRouter.Use(middleware.JWT())
 	{
 		authRouter.POST("changePassword", api.AdminApi.ChangePasswd)

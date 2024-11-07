@@ -6,7 +6,7 @@ type Admin struct {
 	model.Model
 	NickName string `json:"nickname" gorm:"column:nickname"`
 	Username string `json:"username" gorm:"column:username;"`
-	Password string `json:"passwod" gorm:"column:password;"`
+	Password string `json:"password" gorm:"column:password;"`
 	Avatar   string `json:"avatar" gorm:"column:avatar;"`
 	Phone    string `json:"phone" gorm:"column:phone;"`
 	Email    string `json:"email" gorm:"column:email;"`
@@ -17,7 +17,7 @@ type Admin struct {
 
 type AdminLogin struct {
 	Username string `json:"username" gorm:"column:username;"`
-	Password string `json:"passwod" gorm:"column:password;"`
+	Password string `json:"password" gorm:"column:password;"`
 }
 
 type LoginResponse struct {

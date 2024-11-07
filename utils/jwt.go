@@ -52,9 +52,9 @@ func NewToken(baseClaims BaseClaims) (string, error) {
 		BaseClaims: baseClaims,
 		// BufferTime: int64(bf / time.Second), //
 		RegisteredClaims: jwt.RegisteredClaims{
-			NotBefore: jwt.NewNumericDate(time.Now().Add(-1000)), // 签名生效时间
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(ep)),    // 过期时间
-			Issuer:    global.Config.JWT.Issuer,                  // 签名的发行者
+			// NotBefore: jwt.NewNumericDate(time.Now().Add(-1000)), // 签名生效时间
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(ep)), // 过期时间
+			// Issuer:    global.Config.JWT.Issuer,               // 签名的发行者
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

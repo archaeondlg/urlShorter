@@ -18,6 +18,7 @@ func (s *TenantRouter) Register(Router *gin.Engine) {
 		authRouter.POST("changePassword", api.TenantApi.ChangePasswd)
 	}
 	urlRouter := Router.Group("url")
+	urlRouter.Use(middleware.JWT())
 	{
 		urlRouter.POST("create", api.UrlApi.Create)
 	}

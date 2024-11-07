@@ -11,7 +11,7 @@ type Tenant struct {
 
 type TenantLogin struct {
 	Username string `json:"username" gorm:"column:username;"`
-	Password string `json:"passwod" gorm:"column:password;"`
+	Password string `json:"password" gorm:"column:password;"`
 }
 
 type TenantPassword struct {
