@@ -11,7 +11,7 @@ type justFilesFilesystem struct {
 	fs http.FileSystem
 }
 
-func (fs justFilesFilesystem) Open(name string) (http.File, error) {
+func (fs *justFilesFilesystem) Open(name string) (http.File, error) {
 	f, err := fs.fs.Open(name)
 	if err != nil {
 		return nil, err
