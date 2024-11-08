@@ -1,3 +1,5 @@
 package dao
 
-type UrlDao struct{}
+type UrlDao struct {
+	Dao
+}
